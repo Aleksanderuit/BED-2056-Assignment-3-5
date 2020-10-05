@@ -181,6 +181,9 @@ roomcapdf
 ggplot(roomcapdf, aes(x = roomcapreg, y = roomcapdat, fill = roomcapval)) +
   geom_col(position = "dodge")
 
-
+#Final notes: 
+# Did not get the date working again, I think it has problems loading lubridate. (Tried replacing with uneddited code, no luck.)
+# I think there is an easier way to build the dataframe, will look into ways of subsetting in less operations. 
+# Need to learn more about ggplot tools, will make time for that next weekend. 
 
 
