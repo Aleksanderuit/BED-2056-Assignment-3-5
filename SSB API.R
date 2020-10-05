@@ -2,11 +2,6 @@ rm(list=ls())
 
 library(data.table)
 library(tidyverse)
-library(rjstat)
-library(PxWebApiData)
-library(lubridate)
-library(reshape)
-library(ggplot2)
 
 # Read the csv data
 county_csv <- fread("http://data.ssb.no/api/v0/dataset/95274.csv?lang=no")
@@ -18,7 +13,7 @@ head(whole_country_csv)
 rm(county_csv, whole_country_csv)
 
 # Or reading json, the whole country
-
+library(rjstat)
 url <- "http://data.ssb.no/api/v0/dataset/95276.json?lang=no"
 results <- fromJSONstat(url)
 table <- results[[1]]
@@ -28,7 +23,7 @@ table
 rm(list = ls())
 
 #install.packages("PxWebApiData")
-
+library(PxWebApiData)
 
 ?ApiData
 
@@ -60,7 +55,7 @@ dframe <- dframe %>% separate(date,
 head(dframe)
 
 # Make a new proper date variable
-
+library(lubridate)
 dframe <- dframe %>%  mutate(date = ymd(paste(year, month, 1)))
 str(dframe)
 
@@ -128,6 +123,7 @@ dframe <- dframe %>% mutate(region =
 
 mosaic::tally(~region, data = dframe)
 
+# we now have the data in long format ready for data wrangling
 ################################################################################################################
 # Recode the variable “region” into tidy names, and make a single plot of “roomcap” for all counties, over time, 
 # including the “Whole_country”.
@@ -156,16 +152,22 @@ head(dframe)
 roomcap <- dframe[dframe$variable1 == "roomcap",]
 head(roomcap)
 
-
+roomcap
 
 #Doing it the hard way...
 
-roomcapdat <- roomcap$date
+roomcapdat <- roomcap$month
 roomcapreg <- roomcap$region 
 roomcapval <- roomcap$value
 roomcapvar <- roomcap$variable1 
 
 #Create a new dataframe. 
+
+roomcapvar
+roomcapval
+roomcapreg
+roomcapdat
+
 
 
 roomcapdf <- data.frame(roomcapdat, roomcapreg, roomcapval, roomcapvar)
@@ -173,32 +175,10 @@ roomcapdf <- data.frame(roomcapdat, roomcapreg, roomcapval, roomcapvar)
 #Create a plot for region and value.  
 roomcapdf
 
-ggplot(data = roomcap, mapping = aes(x = roomcapreg, y = roomcapval)) +
-  geom_line()
 
+ggplot(roomcapdf, aes(x = roomcapreg, y = roomcapdat, fill = roomcapval)) +
+  geom_col(position = "dodge")
 
-
-
-
-# roomcapdf <- data.frame(x = roomcapdf$roomcapdat,                          
-#                        y = c(roomcapdf$roomcapreg, roomcapdf$roomcapdat, roomcapdf$roomcapvar),
-#                        group = c(rep("roomcapdat", nrow(roomcapdf)),
-#                                  rep("roomcapval", nrow(roomcapdf)),
-#                                  rep("variable1", nrow(roomcapdf))))
-# 
-# 
-# 
-# ggp <- ggplot(roomcapdf, aes(x, y, col = group)) +            
-#   geom_line()
-# ggp   
-# 
-# roomcapdf
-# 
-# #Plot the data. 
-# 
-# 
-# ggplot(data = roomcapdf, aes(x = roomcapdat, y = roomcapreg)) +
-#   geom_point()
 
 
 
