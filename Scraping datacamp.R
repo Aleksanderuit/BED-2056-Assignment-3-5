@@ -36,7 +36,7 @@ plist <- datacampr %>%
   html_text()
 
 
-sammen <- list(python = c(plist), R = c(rlist))
+sammen <- data.frame(python = c(plist), R = c(rlist))
 
 sammen
 
