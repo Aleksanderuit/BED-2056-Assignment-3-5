@@ -175,6 +175,8 @@ roomcapdf <- data.frame(roomcapdat, roomcapreg, roomcapval, roomcapvar)
 #Create a plot for region and value.  
 roomcapdf
 
+#For some reason the date variable broke when I ran the code again. After trying some stuff I gave up and switched it 
+# to month, if I figgure out the error it should be an easy fix in the graph. 
 
 ggplot(roomcapdf, aes(x = roomcapreg, y = roomcapdat, fill = roomcapval)) +
   geom_col(position = "dodge")
