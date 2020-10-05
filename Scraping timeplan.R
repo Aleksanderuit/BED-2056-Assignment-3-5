@@ -17,4 +17,6 @@ data <- timeplan %>%
         html_text()
 
 
-sapply(data, '[', seq(max(sapply(data, length))))
+dfdata <- data.frame(sapply(data, '[', seq(max(sapply(data, length)))))
+
+dfdata

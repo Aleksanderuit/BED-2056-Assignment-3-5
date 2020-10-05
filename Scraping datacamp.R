@@ -42,7 +42,7 @@ sammen
 
 #lage dataframe
 
-sapply(sammen, '[', seq(max(sapply(sammen, length))))
+sammen <- sapply(sammen, '[', seq(max(sapply(sammen, length))))
 
 
 
