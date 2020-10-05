@@ -156,20 +156,49 @@ head(dframe)
 roomcap <- dframe[dframe$variable1 == "roomcap",]
 head(roomcap)
 
-roomcap <- roomcap[roomcap$date, roomcap$region, roomcap$value, roomcap$variable1,]
 
-head(roomcap)
 
-roomcap <- data.frame(x = roomcap$region,                          
-                       y = c(roomcap$date, roomcap$value, roomcap$variable1),
-                       group = c(rep("date", nrow(roomcap)),
-                                 rep("value", nrow(roomcap)),
-                                 rep("variable1", nrow(roomcap))))
+#Doing it the hard way...
 
-head(roomcap)
-roomcap["group"]
-#Plot the data. 
+roomcapdat <- roomcap$date
+roomcapreg <- roomcap$region 
+roomcapval <- roomcap$value
+roomcapvar <- roomcap$variable1 
 
-ggp <- ggplot(roomcap, aes(x, y, col = group)) +            
+#Create a new dataframe. 
+
+
+roomcapdf <- data.frame(roomcapdat, roomcapreg, roomcapval, roomcapvar)
+
+#Create a plot for region and value.  
+roomcapdf
+
+ggplot(data = roomcap, mapping = aes(x = roomcapreg, y = roomcapval)) +
   geom_line()
-ggp   
+
+
+
+
+
+# roomcapdf <- data.frame(x = roomcapdf$roomcapdat,                          
+#                        y = c(roomcapdf$roomcapreg, roomcapdf$roomcapdat, roomcapdf$roomcapvar),
+#                        group = c(rep("roomcapdat", nrow(roomcapdf)),
+#                                  rep("roomcapval", nrow(roomcapdf)),
+#                                  rep("variable1", nrow(roomcapdf))))
+# 
+# 
+# 
+# ggp <- ggplot(roomcapdf, aes(x, y, col = group)) +            
+#   geom_line()
+# ggp   
+# 
+# roomcapdf
+# 
+# #Plot the data. 
+# 
+# 
+# ggplot(data = roomcapdf, aes(x = roomcapdat, y = roomcapreg)) +
+#   geom_point()
+
+
+
